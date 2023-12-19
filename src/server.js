@@ -72,22 +72,9 @@ server.get('/', async (req, res) => {
   })
 })
 
-server.get('/leak', async (req, res) => {
+server.get('/store', async (req, res) => {
   const state = JSON.stringify(store.state)
-  res.send(`
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <title>Counter Leak</title>
-            <script>
-              window.__INITIAL_STATE__ = ${state}
-            </script>
-          </head>
-          <body>
-            state is ${state}
-          </body>
-        </html>
-  `)
+  res.send(state)
 })
 
 server.listen(3000)
