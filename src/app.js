@@ -1,9 +1,7 @@
 import { createSSRApp } from 'vue'
-import { createVuexStore } from './store.js'
+import { store } from './store.js'
 
-const store = createVuexStore()
-
-export function createApp() {
+export function createApp(initValue) {
   const app = createSSRApp({
     computed: {
       count() {
@@ -15,13 +13,16 @@ export function createApp() {
         this.$store.dispatch('increment')
       }
     },
-    created() {
+    mounted() {
       this.$store.dispatch('fetch')
+    },
+    created() {
+      this.$store.commit('set', initValue)
     },
     template: `<button @click="increment">{{ count }}</button>`
   })
 
   app.use(store)
 
-  return { app, store }
+  return app
 }
